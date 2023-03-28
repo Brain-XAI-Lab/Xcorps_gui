@@ -107,8 +107,8 @@ class WindowClass(QMainWindow):
         QTimer.singleShot(ref+r_num+4000,self.clo)
             
     def pr_data(self):
-        board.stop_stream()
-        board.release_session()
+        #board.stop_stream()
+        #board.release_session()
         data = board.get_board_data()
         data=pd.DataFrame(data)
         data.to_csv("result_01.csv")
