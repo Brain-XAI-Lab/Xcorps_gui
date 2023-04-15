@@ -3,16 +3,19 @@ import numpy as np
 import mne
 import tkinter as tk
 from tkinter import Canvas, Frame
+import threading
+from queue import Queue
 
 CHANNEL_MAPPING = {
     'Fp1': 1,
     'Fp2': 2,
     'F3': 3,
     'F4': 4,
+    "Fz":5
     # ...
 }
 
-CHANNELS_TO_MEASURE = ['Fp1', 'Fp2', 'F3', 'F4']
+CHANNELS_TO_MEASURE = ['Fp1', 'Fp2', 'F3', 'F4','Fz']
 
 def get_z(v):
     rms = get_rms(v)
@@ -44,17 +47,16 @@ def impedance_measure(sample, canvas):
         impedance_values.append(z)
 
     return impedance_values
-
 def draw_topoplot(impedance_data, canvas):
     # Clear canvas
     canvas.delete("all")
 
     # Draw topoplot
-    # This is a simple example of drawing circles with different colors
-    # based on impedance_data. You can modify this code to create a more
-    # complex topoplot visualization.
     radius = 20
     max_impedance = max(impedance_data)
+
+    if max_impedance == 0:
+        max_impedance = 1  # 최대 임피던스 값이 0인 경우를 처리합니다.
 
     for i, imp in enumerate(impedance_data):
         x, y = pos_2d[i]
@@ -64,13 +66,29 @@ def draw_topoplot(impedance_data, canvas):
         color = f"#{intensity:02x}{intensity:02x}{intensity:02x}"
         canvas.create_oval(x - radius, y - radius, x + radius, y + radius, fill=color)
 
+
+
 def update_topoplot(board, canvas):
-    sample = board.get_board_data()
+    sample = board.get_new_sample()  # 변경된 부분
     impedance_data = impedance_measure(sample, canvas)
     draw_topoplot(impedance_data, canvas)
     canvas.after(1000, update_topoplot, board, canvas)
-
 def main():
+    q = Queue()
+
+    def on_new_sample(sample):
+        q.put(sample)
+
+    def update_topoplot():
+        if not q.empty():
+            sample = q.get()
+            impedance_data = impedance_measure(sample, canvas)
+            draw_topoplot(impedance_data, canvas)
+        root.after(100, update_topoplot)
+
+    def start_board_stream():
+        board.start_stream(on_new_sample)
+
     root = tk.Tk()
     root.title("Topoplot")
 
@@ -81,13 +99,19 @@ def main():
     canvas.pack()
 
     board = OpenBCICyton(port='COM4', daisy=True)
-    board.start_stream()
-    update_topoplot(board, canvas)
 
-    root.mainloop()
+    board_thread = threading.Thread(target=start_board_stream)
+    board_thread.daemon = True
+    board_thread.start()
 
+    update_topoplot()
+
+    try:
+        root.mainloop()
+    except KeyboardInterrupt:
+        pass
+    finally:
+        board.stop_stream()
+        board_thread.join()
 if __name__ == "__main__":
     main()
-# 사이보드를 연결하고 스트리밍을 시작합니다.
-board = OpenBCICyton(port='COM4', daisy=True)  # 시리얼 포트를 사용하여 연결합니다. 포트 번호는 사용자의 시스템에 맞게 변경해야 합니다.
-board.start_stream(impedance_measure_and_topoplot)
