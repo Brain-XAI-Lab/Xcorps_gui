@@ -1,250 +1,117 @@
-import sys
-from PyQt5.QtWidgets import *
-from PyQt5.QtGui import QPainter, QPen
-from PyQt5.QtCore import *
-import random
-from random import randint
-import pandas as pd
-from brainflow.board_shim import BoardShim, BrainFlowInputParams,BoardIds
-from PyQt5.QtCore import Qt
-import winsound as sd
-import time
-from pprint import pprint
-random.seed()
+import matplotlib.pyplot as plt
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+ from pyOpenBCI import OpenBCICyton
+import numpy as np
+import mne
+import tkinter as tk
+from tkinter import Canvas, Frame
+import threading
+from queue import Queue
 
-     
-class WindowClass(QMainWindow):
-    def __init__(self) :
-        super().__init__()
-        self.setGeometry(0,0,width, height)
-        self.setWindowTitle('Set Protocol')
-        self.data_list=[]
-        self.time_list=[]
-        self.count_list=[]
-        self.timer = QTimer(self)
-        self.time =0
-        #label
-        self.label = QLabel("실험을 시작하려면 시작하기 버튼을 눌러주세요", self)
-        font1 = self.label.font()
-        font1.setBold(True)
-        font1.setPointSize(40)
-        self.label.setFont(font1)
-        self.label.setGeometry(1200,350,1300,500)
-        #button
-        self.btn_1= QPushButton("시작하기",self)
-        self.btn_1.setGeometry(1650,800,200,80)
-        self.btn_1.clicked.connect(self.btn_1_clicked)
-        
-    
-    def btn_1_clicked(self):
-        global trial
-        global last
-        self.label.clear()
-        self.btn_1.hide()
-        global ref ,r_num, ran_n, a
-        ref =10000
-        last=0
-        r_num=0
-        trial=0
-        ran_n=0
-        
-      
-    
-      
-        QTimer.singleShot(ref+r_num+12000,self.pr_data)   
-        QTimer.singleShot(ref+r_num+12500,self.rest)
-        QTimer.singleShot(ref+r_num+15500,self.clo)
-            
-    def pr_data(self):
-        #board.stop_stream()
-        #board.release_session()
-        data = board.get_board_data()
-        data=pd.DataFrame(data)
-        data.to_csv("result_0.csv")
-        time_list=pd.DataFrame(self.time_list)
-        count_list=pd.DataFrame(self.count_list)
-        time_list=pd.concat([time_list,count_list],axis=1).T
-        time_list.to_csv("time_01.csv")
-        
-        #globals()['data{}'.format(trial)]=pd.DataFrame(data)
-        #self.data_list.append(globals()['data{}'.format(trial)])
+CHANNEL_MAPPING = {
+    'Fp1': 1,
+    'Fp2': 2,
+    'F3': 3,
+    'F4': 4,
+    "Fz":5
+    # ...
+}
 
-    def ran(self):
-        global ran_n
-        
-        ran_n += 1    
-    def save(self):
-        #data_save=pd.concat(self.data_list)
-        data_save = pd.DataFrame(self.data_list)
-        data_save.to_csv("result_01.csv")
-    def thank(self):
-        protocol.thank(self)
-    def rest(self):
-        protocol.rest(self)
-    def time_n(self):
-        global a
-        
-        board.insert_marker(a)
-        self.time_list.append(time.time())
-        self.count_list.append(a)
-        a += 1
-        
-    def clo(self):
-        self.close()
-    def beepsound(self):
-        fr = 2000    # range : 37 ~ 32767
-        du = 200     # 1000 ms ==1second
-        sd.Beep(fr, du) # winsound.Beep(frequency, duration)
-         
-    def point (self):
-        global a
-        protocol.point(self)
-        a=3
-       
+CHANNELS_TO_MEASURE = ['Fp1', 'Fp2', 'F3', 'F4','Fz']
 
-    def random(self): 
-        protocol.random(self)
-       
-        
-    def point1(self):   
-        protocol.point1(self)
-      
-      
-    def point_blue(self):
-        protocol.point_blue(self)
-        
-             
-    def close1(self):
-        label2.close()  
-       
-    def close2(self):
-        label3.close() 
-      
-    def close3(self):
-        label4.close()  
-    def close4(self):
-        label5.close() 
-        
-        
-class protocol(WindowClass):
-    def __init__(self) :
-        super().__init__()
-    
-    def point(self):
-        global label2
-        label2 = QLabel("·",self)
-        font2 = label2.font()
-        font2.setBold(True)
-        font2.setPointSize(300)
-        label2.setFont(font2)
-        label2.setGeometry(1700,650,200,100)
-        label2.show()
-    
-                
-    def close1():
-        label2.close()
-                
-    def random(self):
-        target=["받아","보내","꺼줘","켜줘","열어","닫아","이전","다음","감사","미안"]
+def get_z(v):
+    rms = get_rms(v)
+    z = (1e-6 * rms * np.sqrt(2) / 6e-9) - 2200
+    if z < 0:
+        return 0
+    return z
 
-        global label3   
-        
-        
-        label3= QLabel(target[ran_n],self)
-        font2 = label3.font()
-        font2.setBold(True)
-        font2.setPointSize(50)
-        label3.setFont(font2)
-        font2.setFamily('초코쿠키체')
-        label3.setGeometry(1700,620,1000,100)
-        label3.show()
-        
-    def close2():
-        label3.close()
-        
-    def point1(self):
-        global label4
-        label4 = QLabel("·",self)
-        font2 = label4.font()
-        font2.setBold(True)
-        font2.setPointSize(300)
-        label4.setStyleSheet("color: blue")
-        label4.setFont(font2)
-        label4.setGeometry(1700,650,200,100)
-        label4.show()
-        
-    def close3():
-        label4.close() 
-    def point_blue(self):
-        global label5
-        label5 = QLabel("·",self)
-        font2 = label5.font()
-        label5.setStyleSheet("color: blue")
-        font2.setBold(True)
-        font2.setPointSize(300)
-        label5.setFont(font2)
-        label5.setGeometry(1700,650,200,100)
-        label5.show()
-        
-    def close4():
-        label5.close()
-    def thank(self):
-        global label6
-        label6=QLabel("      실험이 모두 종료되었습니다.\n 참가하신 피험자님 고생 많으셨습니다.",self)
-        font3 = label6.font()
-        font3.setBold(True)
-        font3.setPointSize(50)
-        label6.setFont(font3)
-        label6.setGeometry(1100,550,1500,300)
-        label6.show()
-    def rest(self):
-        global label7
-        label7=QLabel("                           쉬는 시간입니다.\n 5분간 휴식 후 진행 할 예정이니 휴대폰을 하거나 안정을 취하세요.",self)
-        font4 = label7.font()
-        font4.setBold(True)
-        font4.setPointSize(50)
-        label7.setFont(font4)
-        label7.setGeometry(900,550,2100,300)
-        label7.show()
+def filter_impedance(v, low_freq=5, high_freq=45, fs=250):
+    v = np.array(v, dtype=float)
+    filtered_v = mne.filter.filter_data(v, fs, low_freq, high_freq, method='iir')
+    return filtered_v
 
-        
-class fun:
-    def start_board():
-        serial_port= "COM4"
-        params = BrainFlowInputParams() 
-        params.serial_port = serial_port 
-        params.serial_number = '' 
-        params.timeout = 0 
-        params.other_info = '' 
-        params.file = '' 
-        params.mac_address = '' 
-        params.ip_address = '' 
-        params.ip_port = 0 
-        params.ip_protocol = 0
-        board = BoardShim(BoardIds.CYTON_DAISY_BOARD, params) 
-        board.prepare_session()
-        #board.config_board('xU060100X') 
-        board.start_stream()
-        return board
-            
-    
-        
-        
-if __name__ == "__main__" :
-    board_id=2
-    pprint(BoardShim.get_board_descr(board_id))
-    board = fun.start_board()
+def get_rms(v):
+    return np.std(v)
 
-    
-    #QApplication : 프로그램을 실행시켜주는 클래스
-    app = QApplication(sys.argv) 
-    screen_rect = app.desktop().screenGeometry()
-    width,height = screen_rect.width(), screen_rect.height()
-    #WindowClass의 인스턴스 생성
-    myWindow = WindowClass() 
+montage = mne.channels.make_standard_montage('standard_1020')
+pos_3d = montage.get_positions()['ch_pos']
+pos_2d = np.array([[x, y] for ch, (x, y, z) in pos_3d.items() if ch in CHANNELS_TO_MEASURE])
 
-    #프로그램 화면을 보여주는 코드
-    myWindow.show()
-    
-    #프로그램을 이벤트루프로 진입시키는(프로그램을 작동시키는) 코드
-    app.exec_()
+def impedance_measure(sample, canvas):
+    eeg, aux = sample.channels_data, sample.aux_data
+    eeg = filter_impedance(eeg)
+    impedance_values = []
+
+    for channel_name in CHANNELS_TO_MEASURE:
+        channel_number = CHANNEL_MAPPING[channel_name]
+        z = get_z(eeg[channel_number - 1])
+        impedance_values.append(z)
+
+    return impedance_values
+def draw_topoplot(impedance_data, channel_names, montage_name='standard_1020', cmap='coolwarm'):
+    # Create a dictionary mapping channel names to impedance values
+    ch_impedance_dict = {ch: imp for ch, imp in zip(channel_names, impedance_data)}
+
+    # Create a new MNE info object with the specified channel names and the standard 10-20 montage
+    info = mne.create_info(channel_names, sfreq=250, ch_types='eeg')
+    info.set_montage(montage_name)
+
+    # Create an MNE Evoked object with the impedance values as data
+    evoked = mne.EvokedArray(np.array([list(ch_impedance_dict.values())]).T, info, tmin=0)
+
+    # Plot the topomap
+    fig, ax = plt.subplots(figsize=(5, 5))
+    plot_topomap(evoked.data[:, 0], evoked.info, axes=ax, cmap=cmap, show=True)
+def update_topoplot(board, fig, ax):
+    sample = board.get_new_sample()
+    impedance_data = impedance_measure(sample, canvas)
+    draw_topoplot(impedance_data, fig, ax)
+    root.after(1000, update_topoplot, board, fig, ax)
+def main():
+    q = Queue()
+
+    def on_new_sample(sample):
+        q.put(sample)
+
+    def update_topoplot():
+        if not q.empty():
+            sample = q.get()
+            impedance_data = impedance_measure(sample, canvas)
+            draw_topoplot(impedance_data, fig, ax)
+        root.after(100, update_topoplot)
+
+    def start_board_stream():
+        board.start_stream(on_new_sample)
+
+    root = tk.Tk()
+    root.title("Topoplot")
+
+    frame = Frame(root)
+    frame.pack()
+
+    # Create a Figure and an Axes object for the topomap plot
+    fig, ax = plt.subplots(figsize=(5, 5))
+
+    # Create a FigureCanvasTkAgg object and embed it into the Tkinter GUI
+    canvas = FigureCanvasTkAgg(fig, master=frame)
+    canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=True)
+
+    board = OpenBCICyton(port='COM4', daisy=True)
+
+    board_thread = threading.Thread(target=start_board_stream)
+    board_thread.daemon = True
+    board_thread.start()
+
+    update_topoplot()
+
+    try:
+        root.mainloop()
+    except KeyboardInterrupt:
+        pass
+    finally:
+        board.stop_stream()
+        board_thread.join()
+
+if __name__ == "__main__":
+    main()
