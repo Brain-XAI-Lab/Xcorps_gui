@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
- from pyOpenBCI import OpenBCICyton
+from pyOpenBCI import OpenBCICyton
 import numpy as np
 import mne
 import tkinter as tk
