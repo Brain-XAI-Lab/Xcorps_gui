@@ -48,68 +48,82 @@ class WindowClass(QMainWindow):
         trial=0
         ran_n=0
         
-        a=1
+        
         QTimer.singleShot(0, self.beepsound) #1
-        QTimer.singleShot(0, self.time_n)
+        global a
+        a=2
+        for p in range(0,10001,8):
+                QTimer.singleShot(p, self.time_1)
         QTimer.singleShot(10000, self.beepsound) #2
-        QTimer.singleShot(10000, self.plus)
+       
 
         for trial in range(2): 
                  
            
             ref += r_num
-
+   
             QTimer.singleShot(ref, self.point) #3
-            for b in range(5001):
-                QTimer.singleShot(ref+b, self.time_m)
+            for b in range(0,5001,8):
+                QTimer.singleShot(ref+b, self.time_2)
             QTimer.singleShot(ref+5000, self.close1) #4
-            QTimer.singleShot(ref+5000, self.plus)
             
+            QTimer.singleShot(ref+5000, self.plus)
             QTimer.singleShot(ref+5000, self.random) #5
-            for c in range(5000,7501):
+            
+            for c in range(5000,7501,8):
                 QTimer.singleShot(ref+c, self.time_m)
             QTimer.singleShot(ref+7500, self.close2) #6
+            
             QTimer.singleShot(ref+7500, self.plus)
-
             QTimer.singleShot(ref+7500, self.point1) #7
-            for d in range(7500,10001):
+            
+            for d in range(7500,10001,8):
                 QTimer.singleShot(ref+c, self.time_m)
             QTimer.singleShot(ref+10000, self.close3) #8
-            QTimer.singleShot(ref+10000, self.plus)
-                
+            
+            QTimer.singleShot(ref+10000, self.minus)   
             QTimer.singleShot(ref+10000, self.random) #9
-            for e in range(10000,12501):
+             
+            for e in range(10000,12501,8):
                 QTimer.singleShot(ref+e, self.time_m)
             QTimer.singleShot(ref+12500, self.close2) #10
+            
             QTimer.singleShot(ref+12500, self.plus)
             QTimer.singleShot(ref+12500, self.point1) #11
-            for f in range(12500,15001):
+            
+            for f in range(12500,15001,8):
                 QTimer.singleShot(ref+f, self.time_m)
             QTimer.singleShot(ref+15000, self.close3) #12
-            QTimer.singleShot(ref+15000, self.plus)
-                
+            
+            QTimer.singleShot(ref+15000, self.minus)    
             QTimer.singleShot(ref+15000, self.random) #13
-            for g in range(15000,17501):
+            
+            for g in range(15000,17501,8):
                 QTimer.singleShot(ref+g, self.time_m)
             QTimer.singleShot(ref+17500, self.close2) #14
+            
             QTimer.singleShot(ref+17500, self.plus)
             QTimer.singleShot(ref+17500, self.point1) #15
-            for h in range(17500,20001):
+            
+            for h in range(17500,20001,8):
                 QTimer.singleShot(ref+h, self.time_m)
             QTimer.singleShot(ref+20000, self.close3) #16
-            QTimer.singleShot(ref+20000, self.plus)
-                
+            
+            QTimer.singleShot(ref+20000, self.minus) 
             QTimer.singleShot(ref+20000, self.random) #17
-            for i in range(20000,22501):
+               
+            for i in range(20000,22501,8):
                 QTimer.singleShot(ref+i, self.time_m)
             QTimer.singleShot(ref+22500, self.close2) #18
+            
             QTimer.singleShot(ref+22500, self.plus)
             QTimer.singleShot(ref+22500, self.point1) #19
-            for j in range(22500,25001):
+            
+            for j in range(22500,25001,8):
                 QTimer.singleShot(ref+j, self.time_m)
             QTimer.singleShot(ref+25000, self.close3) #20  
             QTimer.singleShot(ref+25000, self.ran)    
-            QTimer.singleShot(ref+25000, self.plus)                         
+                                    
             last=25000
             r_num=last
         QTimer.singleShot(ref+r_num+500,self.pr_data)   
@@ -122,10 +136,10 @@ class WindowClass(QMainWindow):
         data = board.get_board_data()
         data=pd.DataFrame(data)
         data.to_csv("result_01.csv")
-        time_list=pd.DataFrame(self.time_list)
-        count_list=pd.DataFrame(self.count_list)
-        time_list=pd.concat([time_list,count_list],axis=1).T
-        time_list.to_csv("time_01.csv")
+        #time_list=pd.DataFrame(self.time_list)
+        #count_list=pd.DataFrame(self.count_list)
+        #time_list=pd.concat([time_list,count_list],axis=1).T
+        #time_list.to_csv("time_01.csv")
         
         #globals()['data{}'.format(trial)]=pd.DataFrame(data)
         #self.data_list.append(globals()['data{}'.format(trial)])
@@ -144,18 +158,37 @@ class WindowClass(QMainWindow):
         protocol.rest(self)
     def time_n(self):
         global a
-        
+        #a -= 1
         board.insert_marker(a)
-        self.time_list.append(time.time())
-        self.count_list.append(a)
-        a += 1
+        #self.time_list.append(time.time())
+        #self.count_list.append(a)
+        
     def time_m(self):
         global a
-        
+        #a += 1
         board.insert_marker(a)
+        
+    def time_1(self):
+        board.insert_marker(1)
+
+    def time_2(self):
+        board.insert_marker(2)
+
+    def time_3(self):
+        global a
+        a=3
+        board.insert_marker(a)
+    def time_4(self):
+        global a
+        a=4
+        board.insert_marker(a)
+    
     def plus(self):
         global a
-        a += 1     
+        a += 1
+    def minus(self):
+        global a
+        a -= 1     
     def clo(self):
         self.close()
     def beepsound(self):
@@ -166,15 +199,18 @@ class WindowClass(QMainWindow):
     def point (self):
         global a
         protocol.point(self)
-        a=3
+ 
        
 
     def random(self): 
+        global a
         protocol.random(self)
-       
+
         
     def point1(self):   
+        global a
         protocol.point1(self)
+
       
       
     def point_blue(self):
