@@ -54,7 +54,7 @@ class WindowClass(QMainWindow):
         QTimer.singleShot(10000, self.beepsound)
 
 
-        for trial in range(5): 
+        for trial in range(10): 
                  
             ref += r_num
             QTimer.singleShot(ref, self.point) #2
@@ -105,11 +105,11 @@ class WindowClass(QMainWindow):
         #board.release_session()
         data = board.get_board_data()
         data=pd.DataFrame(data)
-        data.to_csv("result_01.csv")
-        time_list=pd.DataFrame(self.time_list)
-        count_list=pd.DataFrame(self.count_list)
-        time_list=pd.concat([time_list,count_list],axis=1).T
-        time_list.to_csv("time_01.csv")
+        data.to_csv("result_02.csv")
+        #time_list=pd.DataFrame(self.time_list)
+        #count_list=pd.DataFrame(self.count_list)
+        #time_list=pd.concat([time_list,count_list],axis=1).T
+        #time_list.to_csv("time_01.csv")
         
         #globals()['data{}'.format(trial)]=pd.DataFrame(data)
         #self.data_list.append(globals()['data{}'.format(trial)])
@@ -120,7 +120,7 @@ class WindowClass(QMainWindow):
     def save(self):
         #data_save=pd.concat(self.data_list)
         data_save = pd.DataFrame(self.data_list)
-        data_save.to_csv("result_01.csv")
+        data_save.to_csv("result_02.csv")
 
     def thank(self):
         protocol.thank(self)
