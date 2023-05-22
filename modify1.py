@@ -106,10 +106,10 @@ class WindowClass(QMainWindow):
         data = board.get_board_data()
         data=pd.DataFrame(data)
         data.to_csv("result_01.csv")
-        time_list=pd.DataFrame(self.time_list)
-        count_list=pd.DataFrame(self.count_list)
-        time_list=pd.concat([time_list,count_list],axis=1).T
-        time_list.to_csv("time_01.csv")
+        #time_list=pd.DataFrame(self.time_list)
+        #count_list=pd.DataFrame(self.count_list)
+        #time_list=pd.concat([time_list,count_list],axis=1).T
+        #time_list.to_csv("time_01.csv")
         
         #globals()['data{}'.format(trial)]=pd.DataFrame(data)
         #self.data_list.append(globals()['data{}'.format(trial)])
