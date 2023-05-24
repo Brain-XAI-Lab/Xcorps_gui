@@ -54,7 +54,7 @@ class WindowClass(QMainWindow):
         QTimer.singleShot(10000, self.beepsound)
 
 
-        for trial in range(10): 
+        for trial in range(4): 
                  
             ref += r_num
             QTimer.singleShot(ref, self.point) #2
@@ -62,31 +62,31 @@ class WindowClass(QMainWindow):
             QTimer.singleShot(ref+5000, self.close1) 
 
             QTimer.singleShot(ref+5000, self.random) 
-            QTimer.singleShot(ref+5001, self.time_n)
+            QTimer.singleShot(ref+5001, self.time_)
             QTimer.singleShot(ref+7500, self.close2) 
    
             QTimer.singleShot(ref+7500, self.point1) 
-            QTimer.singleShot(ref+7501, self.time_m)
+            QTimer.singleShot(ref+7501, self.time_)
             QTimer.singleShot(ref+10000, self.close3)
                 
             QTimer.singleShot(ref+10000, self.random) 
-            QTimer.singleShot(ref+10001, self.time_n)
+            QTimer.singleShot(ref+10001, self.time_)
             QTimer.singleShot(ref+12500, self.close2)
 
             QTimer.singleShot(ref+12500, self.point1) 
-            QTimer.singleShot(ref+12501, self.time_m)
+            QTimer.singleShot(ref+12501, self.time_)
             QTimer.singleShot(ref+15000, self.close3) 
                 
             QTimer.singleShot(ref+15000, self.random) 
-            QTimer.singleShot(ref+15001, self.time_n)
+            QTimer.singleShot(ref+15001, self.time_)
             QTimer.singleShot(ref+17500, self.close2)           
 
             QTimer.singleShot(ref+17500, self.point1) 
-            QTimer.singleShot(ref+17501, self.time_m)
+            QTimer.singleShot(ref+17501, self.time_)
             QTimer.singleShot(ref+20000, self.close3) 
 
             QTimer.singleShot(ref+20000, self.random) 
-            QTimer.singleShot(ref+20001, self.time_n)
+            QTimer.singleShot(ref+20001, self.time_)
             QTimer.singleShot(ref+22500, self.close2)           
 
             QTimer.singleShot(ref+22500, self.point1) 
