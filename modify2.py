@@ -90,7 +90,7 @@ class WindowClass(QMainWindow):
             QTimer.singleShot(ref+22500, self.close2)           
 
             QTimer.singleShot(ref+22500, self.point1) 
-            QTimer.singleShot(ref+22501, self.time_n)
+            QTimer.singleShot(ref+22501, self.plus)
             QTimer.singleShot(ref+25000, self.close3) 
             QTimer.singleShot(ref+25000, self.ran)    
        
