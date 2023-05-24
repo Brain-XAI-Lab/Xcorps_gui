@@ -62,7 +62,7 @@ class WindowClass(QMainWindow):
             QTimer.singleShot(ref+5000, self.close1) 
 
             QTimer.singleShot(ref+5000, self.random) 
-            #QTimer.singleShot(ref+5001, self.time_)
+            QTimer.singleShot(ref+5001, self.time_)
             QTimer.singleShot(ref+7500, self.close2) 
    
             QTimer.singleShot(ref+7500, self.point1) 
@@ -90,7 +90,7 @@ class WindowClass(QMainWindow):
             QTimer.singleShot(ref+22500, self.close2)           
 
             QTimer.singleShot(ref+22500, self.point1) 
-            QTimer.singleShot(ref+22501, self.time_n)
+            QTimer.singleShot(ref+22501, self.plus)
             QTimer.singleShot(ref+25000, self.close3) 
             QTimer.singleShot(ref+25000, self.ran)    
        
@@ -138,10 +138,9 @@ class WindowClass(QMainWindow):
         global a
         board.insert_marker(a)
 
-    def time_m(self):
+    def plus(self):
         global a
-        board.insert_marker(a)
-        a -= 1
+        a += 1
 
     def time_1(self):
         board.insert_marker(1)
