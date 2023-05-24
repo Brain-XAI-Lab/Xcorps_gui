@@ -54,7 +54,7 @@ class WindowClass(QMainWindow):
         QTimer.singleShot(10000, self.beepsound)
 
 
-        for trial in range(4): 
+        for trial in range(10): 
                  
             ref += r_num
             QTimer.singleShot(ref, self.point) #2
