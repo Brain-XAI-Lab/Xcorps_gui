@@ -50,6 +50,7 @@ class WindowClass(QMainWindow):
         target=["받아","보내","꺼줘","켜줘","열어","닫아","이전","다음","감사","미안"]
         QTimer.singleShot(0, self.beepsound) #1
         QTimer.singleShot(0, self.time_1)
+        QTimer.singleShot(59999, self.time_1)
         QTimer.singleShot(60000, self.beepsound)
 
 
