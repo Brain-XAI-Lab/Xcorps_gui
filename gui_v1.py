@@ -54,8 +54,7 @@ class WindowClass(QMainWindow):
         QTimer.singleShot(60000, self.beepsound)
 
 
-        for trial in range(10): 
-            a = 2    
+        for trial in range(10):    
             ran_n = 0 
             random.shuffle(target)
             ref += r_num
@@ -63,11 +62,12 @@ class WindowClass(QMainWindow):
             QTimer.singleShot(ref+5000, self.close1) 
 
             QTimer.singleShot(ref+5000, self.random) 
+            QTimer.singleShot(ref+6000, self.record)
             QTimer.singleShot(ref+7500, self.close2) 
    
             QTimer.singleShot(ref+7500, self.point1) 
             QTimer.singleShot(ref+7501, self.time_n)
-            QTimer.singleShot(ref+12499, self.time_m)
+            QTimer.singleShot(ref+12499, self.time_n)
             QTimer.singleShot(ref+12500, self.close3)
             
             
@@ -75,11 +75,12 @@ class WindowClass(QMainWindow):
             QTimer.singleShot(ref+17500, self.close1) 
 
             QTimer.singleShot(ref+17500, self.random) 
+            QTimer.singleShot(ref+18500, self.record)
             QTimer.singleShot(ref+20000, self.close2) 
    
             QTimer.singleShot(ref+20000, self.point1) 
             QTimer.singleShot(ref+20001, self.time_n)
-            QTimer.singleShot(ref+24999, self.time_m)
+            QTimer.singleShot(ref+24999, self.time_n)
             QTimer.singleShot(ref+25000, self.close3)
             
             
@@ -87,11 +88,12 @@ class WindowClass(QMainWindow):
             QTimer.singleShot(ref+30000, self.close1) 
 
             QTimer.singleShot(ref+30000, self.random) 
+            QTimer.singleShot(ref+31000, self.record)
             QTimer.singleShot(ref+32500, self.close2) 
    
             QTimer.singleShot(ref+32500, self.point1) 
             QTimer.singleShot(ref+32501, self.time_n)
-            QTimer.singleShot(ref+37499, self.time_m)
+            QTimer.singleShot(ref+37499, self.time_n)
             QTimer.singleShot(ref+37500, self.close3)
             
             
@@ -99,11 +101,12 @@ class WindowClass(QMainWindow):
             QTimer.singleShot(ref+42500, self.close1) 
 
             QTimer.singleShot(ref+42500, self.random) 
+            QTimer.singleShot(ref+43500, self.record)
             QTimer.singleShot(ref+45000, self.close2) 
    
             QTimer.singleShot(ref+45000, self.point1) 
             QTimer.singleShot(ref+45001, self.time_n)
-            QTimer.singleShot(ref+49999, self.time_m)
+            QTimer.singleShot(ref+49999, self.time_n)
             QTimer.singleShot(ref+50000, self.close3)
             
             
@@ -111,11 +114,12 @@ class WindowClass(QMainWindow):
             QTimer.singleShot(ref+55000, self.close1) 
 
             QTimer.singleShot(ref+55000, self.random) 
+            QTimer.singleShot(ref+56000, self.record)
             QTimer.singleShot(ref+57500, self.close2) 
    
             QTimer.singleShot(ref+57500, self.point1) 
             QTimer.singleShot(ref+57501, self.time_n)
-            QTimer.singleShot(ref+62499, self.time_m)
+            QTimer.singleShot(ref+62499, self.time_n)
             QTimer.singleShot(ref+62500, self.close3)
             
             
@@ -123,11 +127,12 @@ class WindowClass(QMainWindow):
             QTimer.singleShot(ref+67500, self.close1) 
 
             QTimer.singleShot(ref+67500, self.random) 
+            QTimer.singleShot(ref+68500, self.record)
             QTimer.singleShot(ref+70000, self.close2) 
    
             QTimer.singleShot(ref+70000, self.point1) 
             QTimer.singleShot(ref+70001, self.time_n)
-            QTimer.singleShot(ref+74999, self.time_m)
+            QTimer.singleShot(ref+74999, self.time_n)
             QTimer.singleShot(ref+75000, self.close3)
             
             
@@ -135,11 +140,12 @@ class WindowClass(QMainWindow):
             QTimer.singleShot(ref+80000, self.close1) 
 
             QTimer.singleShot(ref+80000, self.random) 
+            QTimer.singleShot(ref+81000, self.record)
             QTimer.singleShot(ref+82500, self.close2) 
    
             QTimer.singleShot(ref+82500, self.point1) 
             QTimer.singleShot(ref+82501, self.time_n)
-            QTimer.singleShot(ref+87499, self.time_m)
+            QTimer.singleShot(ref+87499, self.time_n)
             QTimer.singleShot(ref+87500, self.close3)
             
             
@@ -147,11 +153,12 @@ class WindowClass(QMainWindow):
             QTimer.singleShot(ref+92500, self.close1) 
 
             QTimer.singleShot(ref+92500, self.random) 
+            QTimer.singleShot(ref+93600, self.record)
             QTimer.singleShot(ref+95000, self.close2) 
    
             QTimer.singleShot(ref+95000, self.point1) 
             QTimer.singleShot(ref+95001, self.time_n)
-            QTimer.singleShot(ref+99999, self.time_m)
+            QTimer.singleShot(ref+99999, self.time_n)
             QTimer.singleShot(ref+100000, self.close3)
             
             
@@ -159,22 +166,24 @@ class WindowClass(QMainWindow):
             QTimer.singleShot(ref+105000, self.close1) 
 
             QTimer.singleShot(ref+105000, self.random) 
+            QTimer.singleShot(ref+106000, self.record)
             QTimer.singleShot(ref+107500, self.close2) 
    
             QTimer.singleShot(ref+107500, self.point1) 
             QTimer.singleShot(ref+107501, self.time_n)
-            QTimer.singleShot(ref+112499, self.time_m)
+            QTimer.singleShot(ref+112499, self.time_n)
             QTimer.singleShot(ref+112500, self.close3)
             
             QTimer.singleShot(ref+112500, self.point) #10
             QTimer.singleShot(ref+117500, self.close1) 
 
             QTimer.singleShot(ref+117500, self.random) 
+            QTimer.singleShot(ref+118500, self.record)
             QTimer.singleShot(ref+120000, self.close2) 
    
             QTimer.singleShot(ref+120000, self.point1) 
             QTimer.singleShot(ref+120001, self.time_n)
-            QTimer.singleShot(ref+124999, self.time_m)
+            QTimer.singleShot(ref+124999, self.time_n)
             QTimer.singleShot(ref+125000, self.close3)
             
             if trial != 9:
@@ -197,6 +206,28 @@ class WindowClass(QMainWindow):
         data=pd.DataFrame(data)
         data.to_csv("result_01.csv")
         
+    def record(self):
+        global a, target, ran_n
+        if target[ran_n] == "받아":
+            a = 2
+        elif target[ran_n] == "보내":
+            a = 3
+        elif target[ran_n] == "꺼줘":
+            a = 4
+        elif target[ran_n] == "켜줘":
+            a = 5
+        elif target[ran_n] == "열어":
+            a = 6
+        elif target[ran_n] == "닫아":
+            a = 7
+        elif target[ran_n] == "이전":
+            a = 8
+        elif target[ran_n] == "다음":
+            a = 9
+        elif target[ran_n] == "감사":
+            a = 10
+        elif target[ran_n] == "미안":
+            a = 11                 
 
     def ran(self):
         global ran_n
@@ -215,6 +246,7 @@ class WindowClass(QMainWindow):
     def time_n(self):
         global a
         board.insert_marker(a)
+        
         #self.time_list.append(time.time())
         #self.count_list.append(a)
       
@@ -228,7 +260,11 @@ class WindowClass(QMainWindow):
         a += 1
     def time_1(self):
         board.insert_marker(1)
-  
+    
+    def time_a(self):
+        global a
+        board.insert_marker(a)
+        a = 2
 
         
     def clo(self):
@@ -266,7 +302,7 @@ class WindowClass(QMainWindow):
         global ran_n
         label4.close()  
         ran_n += 1
-        if ran_n ==9:
+        if ran_n ==10:
             ran_n =0
         
     def close4(self):
