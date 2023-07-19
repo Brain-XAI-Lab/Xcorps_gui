@@ -3,6 +3,7 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtGui import QPainter, QPen
 from PyQt5.QtCore import *
 import random
+from random import randint
 import pandas as pd
 from brainflow.board_shim import BoardShim, BrainFlowInputParams,BoardIds
 from PyQt5.QtCore import Qt
@@ -10,7 +11,7 @@ import winsound as sd
 import time
 from pprint import pprint
 import random
-random.seed()
+random.seed(42)
 
      
 class WindowClass(QMainWindow):
@@ -39,13 +40,14 @@ class WindowClass(QMainWindow):
     def btn_1_clicked(self):
         global trial
         global last
+        global a
         self.label.clear()
         self.btn_1.hide()
         global ref ,r_num, ran_n, a, target
         ref =60000
         last=0
         r_num=0
-        
+        a= 0
         
         target=["받아","보내","꺼줘","켜줘","열어","닫아","이전","다음","감사","미안"]
         QTimer.singleShot(0, self.beepsound) #1
@@ -54,9 +56,9 @@ class WindowClass(QMainWindow):
         QTimer.singleShot(60000, self.beepsound)
 
 
-        for trial in range(10):    
+        for trial in range(10):  
+
             ran_n = 0 
-            random.shuffle(target)
             ref += r_num
             QTimer.singleShot(ref, self.point) #1
             QTimer.singleShot(ref+5000, self.close1) 
@@ -290,8 +292,11 @@ class WindowClass(QMainWindow):
       
         
     def resting(self):
+        global a
         protocol.resting(self)
-                
+        a =randint(0, 50)   
+        random.seed(a) 
+        random.shuffle(target)     
     def close1(self):
         label2.close()  
        
